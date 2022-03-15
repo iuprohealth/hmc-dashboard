@@ -1,0 +1,60 @@
+
+<div class="modal fade" id="instructionModal" tabindex="-1" aria-labelledby="instructionModalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="instructionModalTitle">Overview and Instructions</h5>
+            <button class="btn-close" type="button" data-coreui-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <p>Use the drop-down menus to select a <strong>User</strong> and <strong>Record Type</strong> to display.</p>
+            <h4>Spinner</h4>
+            <p>The spinner shows when something is happening in the background.</p>
+            <table class="table">
+            <thead>
+                <tr>
+                <th scope="col">Something is loading:</th>
+                <th scope="col">Finished and ready for next request:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                <td>
+                    <div class="circle-loader">
+                        <div class="checkmark draw"></div>
+                    </div>
+                </td>
+                <td>
+                    <div class="circle-loader load-complete">
+                        <div class="checkmark draw" style="display: block;"></div>
+                    </div>
+                </td>
+                </tr>
+            </tbody>
+            </table>
+
+            <hr>
+            <h4>Sleep</h4>
+            <p>Sleep data is recorded at discrete levels: <strong>awake</strong>, <strong>light sleep</strong>, <strong>deep sleep</strong>, and rapid-eye movement (<strong>REM</strong>)</p>
+            <p>This figure shows a user who was in REM until around midnight, oscillated between light and deep sleep, then woke up around 4:00 AM and had trouble getting back to sleep.</p>
+            <img class="img-fluid" src="{{ url_for('static', filename='images/sleep_overview.png') }}">
+
+            <hr>
+            <h4>Heart Rate</h4>
+            <p>Heart Rate represents the average beats per minute (<strong>BPM</strong>) in the last sixty seconds, and is usually recorded every fifteen seconds.</p>
+            <p>This figure shows a user's heart rate over a 20-minute window. It's </p>
+            <img class="img-fluid" src="{{ url_for('static', filename='images/heart_rate_overview.png') }}">
+
+            <hr>
+            <h4>Blood Oxygen Level</h4>
+            <p>Blood oxygen level (<strong>SpO2</strong>) is measured with a pulse oximeter.</p>
+            <p>Here, it's mainly recorded when users are asleep (there are some exceptions, maybe this is a feature that users can manually activate?). This figure suggests that a user's SpO2 fluctuates between 85 and 95 for most of the night.</p>
+            <img class="img-fluid" src="{{ url_for('static', filename='images/spo2_overview.png') }}">
+
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-coreui-dismiss="modal">Close</button>
+        </div>
+        </div>
+    </div>
+</div>

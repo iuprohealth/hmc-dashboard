@@ -1,0 +1,45 @@
+<div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
+    <div class="sidebar-brand d-none d-md-flex">
+        <img class="sidebar-brand-full" width="206" height="51" src="{{ url_for('static', filename='images/ProHealth-DarkMode-ppi-72.png') }}">
+        <img class="sidebar-brand-narrow" width="40" height="40" src="{{ url_for('static', filename='images/ProHealth-DarkMode-Circle-ppi-72.png') }}">
+    </div>
+
+    <ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
+
+        {% with nav_url="/", nav_icon="cil-user", nav_text="User Overview" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        {% with nav_url="/pairwise-comparison/", nav_icon="cil-group", nav_text="Compare Users" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        {% with nav_url="/stats/", nav_icon="cil-chart-pie", nav_text="Data Summary Statistics" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        <li class="nav-title">Sleep</li>
+
+        {% with nav_url="/sleep-bpm/", nav_icon="cil-heart", nav_text="Sleep + BPM" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        {% with nav_url="/sleep-spo2/", nav_icon="cil-bed", nav_text="Sleep + SpO2" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        <li class="nav-title">Heart Rate</li>
+
+        {% with nav_url="/bpm-stress/", nav_icon="cil-heart", nav_text="BPM + Stress" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+        <li class="nav-title">Meta</li>
+
+        {% with nav_url="/licenses/", nav_icon="cil-notes", nav_text="Open Source Licenses" %}
+            {% include "includes/nav_item.html" %}
+        {% endwith %}
+
+    </ul>
+    <button class="sidebar-toggler" type="button" data-coreui-toggle="unfoldable"></button>
+</div>

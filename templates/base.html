@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="description" content="A little dashboard for Hoosier Moms Cohort Data">
+    <meta name="author" content="Alexander L. Hayes">
+
+    <title>Little Dashboard</title>
+
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/icons.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/dashboard.css') }}">
+
+    <script src="https://cdn.plot.ly/plotly-2.11.0.min.js"></script>
+</head>
+<body>
+
+{% include "includes/sidebar.html" %}
+
+<div class="wrapper d-flex flex-column min-vh-100 bg-light">
+    <div class="body flex-grow-1 px-3">
+        <div class="container-lg">
+
+            <div class="card mb-3">
+
+                <div class="card-header">
+                    <h3>Hoosier Moms Cohort - Garmin Wearables</h3>
+                    <p><strong>Non-production build</strong>. Heart Rate, Sleep, SpO2, and Stress.</p>
+                </div>
+
+                <div class="card-body">
+
+                    {% include "includes/tutorial_modal.html" %}
+
+                    <button class="btn btn-primary" type="button" data-coreui-toggle="modal" data-coreui-target="#instructionModal">View instructions</button>
+
+                    <hr>
+
+                    <h4>Dashboard</h4>
+
+                    <div class="row">
+
+                        <div class="col">
+                            <p><strong>User</strong></p>
+                            <select class="form-control" id="user">
+                                <option value="demo-user-1">Sample User</option>
+                                <option value="bad-data">Bad Data</option>
+                                <option value="00103618-85ce-425b-96b0-2d30496c0a1e">0010361</option>
+                                <option value="00c8c413-5ab1-400f-b04d-fcb6a061d838">00c8c41</option>
+                                <option value="02241504-544a-4287-9ec5-00b4b8c01034">0224150</option>
+                                <option value="0019914e-51ba-4332-97bc-e132c434bb91">0019914</option>
+                                <option value="0132a0d6a576073271aa0e74aae862e9">0132a0d</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <p><strong>Record Type</strong></p>
+                            <select class="form-control" id="view">
+                                <option value="sleep">Sleep</option>
+                                <option value="heart_rate">Heart Rate</option>
+                                <option value="stress">Stress</option>
+                                <option value="blood_oxygenation">Blood Oxygenation</option>
+                            </select>
+                        </div>
+
+                        <div class="col">
+                            <p><strong>Status</strong></p>
+                            <div class="circle-loader load-complete">
+                                <div class="checkmark draw" style="display: block;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="status-message" style="margin: 5px; height: 20px;">
+                    </div>
+
+                    <br/>
+                    <div class="row">
+                        <div class="c-chart-wrapper" style="width:97%" id="visualization">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var graph = {{plot | safe}};
+    Plotly.newPlot('visualization', graph);
+</script>
+
+<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+<script src="{{ url_for('static', filename='js/hmc-dashboard.js') }}"></script>
+<script src="{{ url_for('static', filename='js/coreui.min.js') }}"></script>
+</body>
+</html>
