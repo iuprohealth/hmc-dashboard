@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block content %}
+
+<p>This table shows the "number of records" recorded for each user and each type of measurement.</p>
+
+<!--
+    TODO(hayesall): This would be more useful if I could pull information like:
+
+    - Date of first stamp
+    - Date of last stamp
+    - Observation window (e.g. rounded to # months)
+    - "Density?" (e.g. how many timestamps are recorded during the observation window?)
+-->
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css" />
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+{{ user_dataframe | safe}}
+
+<script>
+    $(document).ready( function () {
+        $('#summaryTable').DataTable();
+    } );
+</script>
+
+{% endblock %}
