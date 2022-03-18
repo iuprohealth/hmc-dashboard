@@ -4,6 +4,9 @@
 
 <div class="row">
 
+    <div id="view1" val="sleep"></div>
+    <div id="view2" val="heart_rate"></div>
+
     <div class="col">
         <p><strong>User</strong></p>
         <select class="form-control" id="user">
@@ -35,40 +38,19 @@
 $('#user').on('change', function() {
     toggle_spinner();
     $.ajax({
-        url: "/update_view",
+        url: "/request_pair",
         type: "GET",
         contentType: 'application/json;charset=UTF-8',
         data: {
             'user': document.getElementById('user').value,
-            'view': document.getElementById('view').value
+            'view1': document.getElementById('view1').getAttribute("val"),
+            'view2': document.getElementById('view2').getAttribute("val"),
         },
         dataType:"json",
         success: function(data) {
             Plotly.react('visualization', data);
-            set_status_text((data.data[0].y.length).toLocaleString("en-US") + " records loaded.");
-            toggle_spinner();
-        },
-        error: function() {
-            set_status_text("❌ An error occurred (probably a missing record, try another User or Record Type).");
-            toggle_spinner();
-        }
-    });
-})
-
-$("#view").on("change", function() {
-    toggle_spinner();
-    $.ajax({
-        url: "/update_view",
-        type: "GET",
-        contentType: "application/json;charset=UTF-8",
-        data: {
-            "user": document.getElementById("user").value,
-            "view": document.getElementById("view").value
-        },
-        dataType: "json",
-        success: function(data) {
-            Plotly.react('visualization', data);
-            set_status_text((data.data[0].y.length).toLocaleString("en-US") + " records loaded.");
+            console.log(data);
+            set_status_text("Notes go here.");
             toggle_spinner();
         },
         error: function() {

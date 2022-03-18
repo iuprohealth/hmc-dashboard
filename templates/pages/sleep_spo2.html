@@ -1,3 +1,72 @@
 {% extends "base.html" %}
 {% block content %}
+
+
+<div class="row">
+
+    <div id="view1" val="sleep"></div>
+    <div id="view2" val="blood_oxygenation"></div>
+
+    <div class="col">
+        <p><strong>User</strong></p>
+        <select class="form-control" id="user">
+            {% for (user_full, user) in users %}
+            <option value="{{ user_full }}">{{ user }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col">
+        <p><strong>Status</strong></p>
+        <div class="circle-loader load-complete">
+            <div class="checkmark draw" style="display: block;"></div>
+        </div>
+    </div>
+</div>
+
+<div id="status-message" style="margin: 5px; height: 20px;">
+</div>
+
+<br/>
+<div class="row">
+    <div class="c-chart-wrapper" style="width:97%" id="visualization">
+    </div>
+</div>
+
+<script>
+
+$('#user').on('change', function() {
+    toggle_spinner();
+    $.ajax({
+        url: "/request_pair",
+        type: "GET",
+        contentType: 'application/json;charset=UTF-8',
+        data: {
+            'user': document.getElementById('user').value,
+            'view1': document.getElementById('view1').getAttribute("val"),
+            'view2': document.getElementById('view2').getAttribute("val"),
+        },
+        dataType:"json",
+        success: function(data) {
+            Plotly.react('visualization', data);
+            console.log(data);
+            set_status_text("Notes go here.");
+            toggle_spinner();
+        },
+        error: function() {
+            set_status_text("❌ An error occurred (probably a missing record, try another User or Record Type).");
+            toggle_spinner();
+        }
+    });
+})
+
+</script>
+
+
+<script>
+    var graph = {{plot | safe}};
+    Plotly.newPlot('visualization', graph);
+</script>
+
+
 {% endblock %}
