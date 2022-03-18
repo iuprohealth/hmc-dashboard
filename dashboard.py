@@ -59,13 +59,53 @@ def data_summary_statistics():
         plot=None,
     )
 
+def plot_pair(type1, type2, view1, view2):
+
+    view1_line_shape = "linear"
+    view2_line_shape = "linear"
+
+    if type1 == "sleep":
+        view1_col = "level"
+        view1_line_shape = "hv"
+    elif type1 == "heart_rate":
+        view1_col = "bpm"
+
+    if type2 == "heart_rate":
+        view2_col = "bpm"
+    elif type2 == "blood_oxygenation":
+        view2_col = "spo2"
+    elif type2 == "stress":
+        view2_col = "stress"
+
+    fig = subplots.make_subplots(rows=2, shared_xaxes=True)
+    fig.add_trace(go.Scatter(x=view1.timestamp, y=view1[view1_col], line_shape=view1_line_shape), row=1, col=1)
+    fig.add_trace(go.Scatter(x=view2.timestamp, y=view2[view2_col], line_shape=view2_line_shape), row=2, col=1)
+
+    return json.dumps(fig, cls=plotly.utils.PlotlyJSONEncoder)
+
+@app.route("/request_pair", methods=["GET", "POST"])
+def request_pair():
+    user = request.args["user"]
+    view1 = request.args["view1"]
+    view2 = request.args["view2"]
+
+    df_view1 = pd.read_csv(f"data/{view1}/{user}.csv")
+    df_view2 = pd.read_csv(f"data/{view2}/{user}.csv")
+
+    return plot_pair(view1, view2, df_view1, df_view2)
+
 @app.route("/sleep-bpm/")
 def sleep_bpm():
     data = load_user_sleep_bpm(DEFAULT_USER)
+
+    # Find the users with >0 sleep and bpm
+    # TODO(hayesall): Caching, calculate this once.
+    users = METADATA.loc[(METADATA.sleep > 0) & (METADATA.heart_rate > 0)][["user_full", "user"]].to_numpy().tolist()
+
     return render_template(
         "pages/sleep_bpm.html",
         page_title="Sleep + BPM",
-        users=get_users(),
+        users=users,
         plot=data,
     )
 
@@ -84,11 +124,27 @@ def load_user_sleep_bpm(user):
 
 @app.route("/sleep-spo2/")
 def sleep_spo2():
-    return render_template("pages/sleep_spo2.html", page_title="Sleep + SpO2", plot="null")
+
+    users = METADATA.loc[(METADATA.sleep > 0) & (METADATA.blood_oxygenation > 0)][["user_full", "user"]].to_numpy().tolist()
+
+    return render_template(
+        "pages/sleep_spo2.html",
+        page_title="Sleep + SpO2",
+        users=users,
+        plot="null",
+    )
 
 @app.route("/bpm-stress/")
 def sleep_bpm_stress():
-    return render_template("pages/bpm_stress.html", page_title="BPM + Stress", plot=None)
+
+    users = METADATA.loc[(METADATA.heart_rate > 0) & (METADATA.stress > 0)][["user_full", "user"]].to_numpy().tolist()
+
+    return render_template(
+        "pages/bpm_stress.html",
+        page_title="BPM + Stress",
+        users=users,
+        plot="null",
+    )
 
 @app.route("/licenses/")
 def licenses():
