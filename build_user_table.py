@@ -31,7 +31,7 @@ if __name__ == "__main__":
 
         for file in os.listdir(path):
             with open(path.joinpath(file), "r") as fh:
-                lines = len(fh.read().splitlines())
+                lines = len(fh.read().splitlines()) - 1
 
             users[file.replace(".csv", "")][data_types.index(dir)] = lines
 
