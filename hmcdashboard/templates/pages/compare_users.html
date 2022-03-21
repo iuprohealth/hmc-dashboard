@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="row">
+
+    <div class="col">
+        <p><strong>First User</strong></p>
+        <select class="form-control" id="user1">
+            {% for (user_full, user) in users %}
+            <option value="{{ user_full }}">{{ user }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col">
+        <p><strong>Second User</strong></p>
+        <select class="form-control" id="user2">
+            {% for (user_full, user) in users %}
+            <option value="{{ user_full }}">{{ user }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="col">
+        <p><strong>Record Type</strong></p>
+        <select class="form-control" id="view">
+            <option value="sleep">Sleep</option>
+            <option value="heart_rate">Heart Rate</option>
+            <option value="stress">Stress</option>
+            <option value="blood_oxygenation">Blood Oxygenation</option>
+        </select>
+    </div>
+
+    <div class="col">
+        <p>&mdash;</p>
+        <button class="btn btn-success" id="go"><div class="icon icon-md"><i class="cil-filter-frames"></i></div> Get Data</button>
+    </div>
+
+    <div class="col">
+        <p><strong>Status</strong></p>
+        <div class="circle-loader load-complete">
+            <div class="checkmark draw" style="display: block;"></div>
+        </div>
+    </div>
+</div>
+
+<div id="status-message" style="margin: 5px; height: 20px;">
+</div>
+
+<br/>
+<div class="row">
+    <div class="c-chart-wrapper" style="width:97%" id="visualization">
+    </div>
+</div>
+
+
+<script>
+
+$('#go').on('click', function() {
+    toggle_spinner();
+
+    first_user = document.getElementById('user1').value;
+    second_user = document.getElementById('user2').value;
+
+    $.ajax({
+        url: "/plot_user_comparison",
+        type: "GET",
+        contentType: 'application/json;charset=UTF-8',
+        data: {
+            'user1': first_user,
+            'user2': second_user,
+            'view': document.getElementById('view').value
+        },
+        dataType:"json",
+        success: function(data) {
+            Plotly.react('visualization', data);
+
+            if (first_user == second_user) {
+                set_status_text((data.data[0].y.length).toLocaleString("en-US") + " records loaded.");
+            } else {
+                set_status_text("First user: " + (data.data[0].y.length).toLocaleString("en-US") + " records. Second user: " + (data.data[1].y.length).toLocaleString("en-US") + " records.");
+            }
+            toggle_spinner();
+        },
+        error: function() {
+            set_status_text("❌ An error occurred (probably a missing record, try another User or Record Type).");
+            toggle_spinner();
+        }
+    });
+})
+</script>
+
+<script>
+    var graph = {{ plot | safe }}
+    Plotly.newPlot("visualization", graph);
+</script>
+
+{% endblock %}

@@ -49,12 +49,11 @@ $('#user').on('change', function() {
         dataType:"json",
         success: function(data) {
             Plotly.react('visualization', data);
-            console.log(data);
-            set_status_text("Notes go here.");
+            set_status_text((data.data[0].y.length).toLocaleString("en-US") + " sleep records. " + (data.data[1].y.length).toLocaleString("en-US") + " SpO2 records.");
             toggle_spinner();
         },
         error: function() {
-            set_status_text("❌ An error occurred (probably a missing record, try another User or Record Type).");
+            set_status_text("❌ An error occurred (probably a missing record, try another User).");
             toggle_spinner();
         }
     });
