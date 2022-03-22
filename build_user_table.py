@@ -9,6 +9,7 @@ from collections import defaultdict
 import os
 from pathlib import Path
 
+from tqdm import tqdm
 import pandas as pd
 
 
@@ -29,7 +30,7 @@ if __name__ == "__main__":
 
         path = Path("data").joinpath(dir)
 
-        for file in os.listdir(path):
+        for file in tqdm(os.listdir(path)):
             with open(path.joinpath(file), "r") as fh:
                 lines = len(fh.read().splitlines()) - 1
 
