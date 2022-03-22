@@ -4,14 +4,19 @@
 from collections import namedtuple
 from functools import lru_cache
 import json
+from pathlib import Path
 
 import pandas as pd
 import plotly
 import plotly.graph_objects as go
 from plotly import subplots
 
-
+# A "View" is a slice of user data with a
+#   readable name,
+#   attribute type (e.g. heart rates are measured in BPM)
+#   shape for plotting (e.g. heart rate is linear)
 View = namedtuple("View", "readable attribute shape")
+
 
 class Views:
 
@@ -27,19 +32,19 @@ class Views:
         return list(Views.VIEWS.keys())
 
     @staticmethod
-    def view_name(view):
+    def view_name(view: str):
         return Views.VIEWS[view].readable
 
     @staticmethod
-    def view_attribute(view):
+    def view_attribute(view: str):
         return Views.VIEWS[view].attribute
 
     @staticmethod
-    def fig_params(view):
+    def fig_params(view: str):
         return {"line_shape": Views.VIEWS[view].shape, "mode": "lines"}
 
     @staticmethod
-    def fig_update(view):
+    def fig_update(view: str):
         if view == "sleep":
             return {
                 "ticktext": ["REM", "deep sleep", "light sleep", "awake"],
@@ -49,16 +54,18 @@ class Views:
 
 
 class Users:
+    def __init__(
+        self, data_path: str = "data", metadata_file: str = "user_metadata.csv"
+    ):
+        self.METADATA = pd.read_csv(metadata_file)
+        self.data_path = data_path
 
-    def __init__(self):
-        self.METADATA = pd.read_csv("user_metadata.csv")
-
-    @staticmethod
-    def load_user_from_csv(user, view):
+    def load_user_from_csv(self, user: str, view: str):
 
         assert view in Views.views()
 
-        return pd.read_csv(f"data/{view}/{user}.csv")
+        pth = Path(self.data_path).joinpath(view).joinpath(user + ".csv")
+        return pd.read_csv(pth)
 
     @lru_cache(maxsize=None)
     def get_users(self, view_pair: tuple([str, str]) = None):
@@ -79,24 +86,31 @@ class Users:
         assert view_pair[0] in Views.views()
         assert view_pair[1] in Views.views()
 
-        _col0 = view_pair[0]
-        _col1 = view_pair[1]
+        _col0, _col1 = view_pair
 
-        return self.METADATA.loc[
-            (self.METADATA[_col0] > 0) & (self.METADATA[_col1] > 0)
-        ][["user_full", "user"]].to_numpy().tolist()
+        return [
+            tuple(a)
+            for a in self.METADATA.loc[
+                (self.METADATA[_col0] > 0) & (self.METADATA[_col1] > 0)
+            ][["user_full", "user"]]
+            .to_numpy()
+            .tolist()
+        ]
 
 
-
-def plot_one(dataframe, column: str, readable_name: str, fig_params: dict, fig_update: dict):
+def plot_one(
+    dataframe, column: str, readable_name: str, fig_params: dict, fig_update: dict
+):
 
     fig = go.Figure()
-    fig.add_trace(go.Scatter(
-        x=dataframe["timestamp"],
-        y=dataframe[column],
-        name=readable_name,
-        **fig_params,
-    ))
+    fig.add_trace(
+        go.Scatter(
+            x=dataframe["timestamp"],
+            y=dataframe[column],
+            name=readable_name,
+            **fig_params,
+        )
+    )
 
     if fig_update:
         fig.update_yaxes(**fig_update)
@@ -138,11 +152,12 @@ def plot_two(dataframe1, dataframe2, view1, view2):
         fig.update_layout(
             yaxis1=dict(
                 ticktext=["REM", "deep sleep", "light sleep", "awake"],
-                tickvals=[0, 1, 2, 3]
+                tickvals=[0, 1, 2, 3],
             )
         )
 
     return figure_to_json(fig)
+
 
 def plot_comparison(dataframe1, dataframe2, view, usernames: tuple = None):
 
@@ -180,16 +195,16 @@ def plot_comparison(dataframe1, dataframe2, view, usernames: tuple = None):
         fig.update_layout(
             yaxis1=dict(
                 ticktext=["REM", "deep sleep", "light sleep", "awake"],
-                tickvals=[0, 1, 2, 3]
+                tickvals=[0, 1, 2, 3],
             ),
             yaxis2=dict(
                 ticktext=["REM", "deep sleep", "light sleep", "awake"],
-                tickvals=[0, 1, 2, 3]
-            )
-
+                tickvals=[0, 1, 2, 3],
+            ),
         )
 
     return figure_to_json(fig)
+
 
 def figure_to_json(figure):
     return json.dumps(figure, cls=plotly.utils.PlotlyJSONEncoder)
