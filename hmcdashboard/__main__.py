@@ -12,7 +12,7 @@ from hmcdashboard.common import plot_comparison
 from flask import Flask, render_template, request
 
 app = Flask(__name__)
-USERS = Users()
+USERS = None
 VIEWS = Views()
 
 DEFAULT_USER = "demo-user-1"
@@ -144,9 +144,13 @@ if __name__ == "__main__":
 
     PARSER = argparse.ArgumentParser()
     PARSER.add_argument("-d", "--debug", action="store_true", help="Run server in debug mode.")
+    PARSER.add_argument("-p", "--data-path", type=str, default="data", help="Set a path to the data directory.")
+    PARSER.add_argument("-m", "--metadata-file", type=str, default="user_metadata.csv", help="Metadata file.")
     PARSER.add_argument("--host", type=str, default="127.0.0.1", help="Server host (default: 127.0.0.1)")
     PARSER.add_argument("--port", type=int, default=5000, help="Server port (default: 5000)")
 
     ARGS = PARSER.parse_args()
+
+    USERS = Users(data_path=ARGS.data_path, metadata_file=ARGS.metadata_file)
 
     app.run(debug=ARGS.debug, host=ARGS.host, port=ARGS.port)
