@@ -2,6 +2,7 @@
 # MIT License
 
 from collections import namedtuple
+from functools import lru_cache
 import json
 
 import pandas as pd
@@ -59,7 +60,8 @@ class Users:
 
         return pd.read_csv(f"data/{view}/{user}.csv")
 
-    def get_users(self, view_pair: tuple = None):
+    @lru_cache(maxsize=None)
+    def get_users(self, view_pair: tuple([str, str]) = None):
         """
         Get user IDs (user_full) and short slugs (user).
 
