@@ -53,6 +53,7 @@ LICENSE file for details.
 <details>
 <summary>View License</summary>
 
+```
 MIT License
 
 Copyright (c) 2022 Alexander L. Hayes
@@ -74,6 +75,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+```
 
 </details>
 
@@ -84,6 +86,7 @@ https://github.com/pallets/flask
 <details>
 <summary>View License</summary>
 
+```
 Copyright 2010 Pallets
 
 Redistribution and use in source and binary forms, with or without
@@ -112,6 +115,7 @@ PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
 LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
 NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
 
 </details>
 
@@ -124,6 +128,7 @@ https://github.com/pandas-dev/pandas
 <details>
 <summary>View License</summary>
 
+```
 BSD 3-Clause License
 
 Copyright (c) 2008-2011, AQR Capital Management, LLC, Lambda Foundry, Inc. and PyData Development Team
@@ -155,6 +160,7 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+```
 
 </details>
 
@@ -167,6 +173,7 @@ https://github.com/plotly/plotly.js
 <details>
 <summary>View License</summary>
 
+```
 The MIT License (MIT)
 
 Copyright (c) 2021 Plotly, Inc
@@ -188,6 +195,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
 
 </details>
 
@@ -200,6 +208,7 @@ https://github.com/plotly/plotly.py
 <details>
 <summary>View License</summary>
 
+```
 The MIT License (MIT)
 
 Copyright (c) 2016-2018 Plotly, Inc
@@ -221,6 +230,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
 
 </details>
 
@@ -234,6 +244,7 @@ https://github.com/jquery/jquery
 <details>
 <summary>View License</summary>
 
+```
 Copyright OpenJS Foundation and other contributors, https://openjsf.org/
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -254,6 +265,7 @@ NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
 LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
 OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
 
 </details>
 
@@ -266,6 +278,7 @@ https://github.com/coreui/coreui
 <details>
 <summary>View License</summary>
 
+```
 The MIT License (MIT)
 
 Copyright (c) 2011-2021 Twitter, Inc.
@@ -288,6 +301,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
 
 </details>
 
@@ -300,6 +314,7 @@ https://github.com/coreui/coreui-free-bootstrap-admin-template
 <details>
 <summary>View License</summary>
 
+```
 The MIT License (MIT)
 
 Copyright (c) 2018 creativeLabs Łukasz Holeczek.
@@ -321,6 +336,7 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```
 
 </details>
 
@@ -333,6 +349,7 @@ https://github.com/coreui/coreui-icons
 <details>
 <summary>View License</summary>
 
+```
 CoreUI Icons Free is free, open source, and GPL friendly. You can use it for
 commercial projects, open source projects, or really almost whatever you want.
 Full CoreUI Icons Free license: https://coreui.io/icons/license/.
@@ -357,5 +374,6 @@ these files normally.
 We've kept attribution comments terse, so we ask that you do not actively work
 to remove them from files, especially code. They're a great way for folks to
 learn about CoreUI Icons.
+```
 
 </details>
