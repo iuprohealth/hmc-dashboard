@@ -1,4 +1,18 @@
-# A Dashboard (for the Hoosier Moms Cohort)
+<h1 align="center">A Dashboard (for the Hoosier Moms Cohort)</h1>
+
+<p align="center">
+  <i>Some visualizations for exploring data exported from wearable devices.</i>
+</p>
+
+<p align="center">
+  <img src="docs/images/hmc-dashboard-overview.gif"></img>
+</p>
+
+---
+
+*Data is not stored here, this will behave strangely without data.*
+
+**Basic startup**:
 
 ```bash
 pip install -r requirements.txt
@@ -6,44 +20,50 @@ python -m hmcdashboard
 # localhost:5000
 ```
 
-## Space Savings?
+## Architecture
 
-Simply exporting the data as it is may not be ideal.
+Currently this assumes data for each user is exported from the main
+database into a series of `.csv` files.
 
-Here's `du -h` for the data directory, which will be a reasonable baseline:
+- Caching into flat files makes later loading *slightly* faster over sqlite
+  and doesn't have the overhead of maintaining the sqlite paging, etc.
+- Since the main aim here is *visualization* rather than *analysis*,
+  we can cut the size of the cached files in half (6GB → 3GB) but produce
+  identical visualizations (some notes on doing this are in my
+  dev log in the `docs/` directory, and use the `cleanup.py` script).
 
-```
-28M   data/sleep              308 users
-5.4G  data/heart_rate         354 users
-23M   data/blood_oxygenation   81 users
-577M  data/stress             359 users
-6.0G  data
-```
+So first-time-setup will require building a copy of the metadata
+from the `data/` directory:
 
-Assuming a very simple linearity, e.g.: (`79`, `80`, `80`, `80`, `80`, `76`)
-is the same as (`79`, `80`, `76`) we can potentially remove a huge number of
-observations, particularly if long-running measurements like user heart
-rate may not change much over the course of an hour.
-
-This shaves off ~3 GB, mostly in the heart rate data.
-
-```
-26M   data/sleep
-2.1G  data/heart_rate
-17M   data/blood_oxygenation
-372M  data/stress
-2.5G  data
-```
-
-For transfer between devices, zipping gets the directory down to
-around 363 MB:
-
-```bash
-$ du -h data.zip
-363M	data.zip
+```console
+$ ls data
+blood_oxygenation  heart_rate  sleep  stress
+$ python build_user_table.py
+Building sleep
+100%|███████████████████████████████████████| 308/308 [00:00<00:00, 4146.80it/s]
+Building heart_rate
+100%|█████████████████████████████████████████| 354/354 [00:08<00:00, 40.28it/s]
+Building blood_oxygenation
+100%|███████████████████████████████████████████| 81/81 [00:00<00:00, 89.98it/s]
+Building stress
+100%|█████████████████████████████████████████| 359/359 [00:13<00:00, 27.20it/s]
+Writing to user_metadata.csv
 ```
 
 ## Licenses
+
+This app can be redistributed under the terms of the MIT License.
+
+- **Backend**: `Flask`, `Pandas`
+- **Plotting**: `plotly.js`, `plotly.py`
+- **Frontend**: `jQuery`, `CoreUI UI Kit`, `CoreUI Bootstrap Admin Template`, `CoreUI Linear Icons`
+
+I learned a trick for switching out plotly visualizations between the front and back
+from the Hepta Analytics blog post by Yvonne Wambui (https://blog.heptanalytics.com/flask-plotly-dashboard/),
+which is adapted under the terms of the MIT License.
+
+<details>
+<summary>View all licensing information</summary>
 
 ### HMCDashboard
 
@@ -78,6 +98,8 @@ SOFTWARE.
 ```
 
 </details>
+
+---
 
 ### Flask: Used under the terms of the BSD-3-Clause License
 
@@ -375,5 +397,7 @@ We've kept attribution comments terse, so we ask that you do not actively work
 to remove them from files, especially code. They're a great way for folks to
 learn about CoreUI Icons.
 ```
+
+</details>
 
 </details>
