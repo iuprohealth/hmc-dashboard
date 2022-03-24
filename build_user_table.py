@@ -30,6 +30,7 @@ if __name__ == "__main__":
 
         path = Path("data").joinpath(dir)
 
+        print(f"Building {dir}")
         for file in tqdm(os.listdir(path)):
             with open(path.joinpath(file), "r") as fh:
                 lines = len(fh.read().splitlines()) - 1
