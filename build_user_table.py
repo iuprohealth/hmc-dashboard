@@ -28,10 +28,18 @@ if __name__ == "__main__":
 
     for dir in os.listdir("data"):
 
-        path = Path("data").joinpath(dir)
+        if "DS" in dir:
+           continue
 
+
+
+
+        path = Path("data").joinpath(dir)
         print(f"Building {dir}")
         for file in tqdm(os.listdir(path)):
+        
+            if "DS" in file:
+               continue
             with open(path.joinpath(file), "r") as fh:
                 lines = len(fh.read().splitlines()) - 1
 
