@@ -28,11 +28,8 @@ if __name__ == "__main__":
 
     for dir in os.listdir("data"):
 
-        if "DS" in dir:
+        if ".DS_Store" in dir:
            continue
-
-
-
 
         path = Path("data").joinpath(dir)
         print(f"Building {dir}")
